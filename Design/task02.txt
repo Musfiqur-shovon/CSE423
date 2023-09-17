@@ -1,0 +1,82 @@
+
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+
+
+def draw_points(x, y):
+    glPointSize(5) #pixel size. by default 1 thake
+    glBegin(GL_POINTS)
+    glVertex2f(x,y) #jekhane show korbe pixel
+    glEnd()
+
+def draw_lines(x0, y0 ,x1, y1):
+    glBegin(GL_LINES)
+    glVertex2f(x0,y0)
+    glVertex2f(x1,y1)#jekhane show korbe pixel
+    glEnd()
+
+def draw_triangles():
+    glBegin(GL_TRIANGLES)
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(80, 400)
+    glVertex2f(420, 400)
+    glVertex2f(250, 600)
+    glEnd()
+
+
+def iterate():
+    glViewport(0, 0, 500, 700)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glOrtho(0.0, 500, 0.0, 700, 0.0, 1.0)
+    glMatrixMode (GL_MODELVIEW)
+    glLoadIdentity()
+
+def showScreen():
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    iterate()
+    glColor3f(1.0, 0.0, 0.0)
+
+
+
+    draw_lines(100, 50,400,50)
+    draw_lines(100, 50, 100, 400)
+    draw_lines(100, 400, 400, 400)
+    draw_lines(400, 400, 400, 50)
+
+    glColor3f(0.0, 1.0, 0.0)
+    draw_lines(210, 200, 290, 200)
+    draw_lines(210, 200, 210, 50)
+    draw_lines(290, 200, 290, 50)
+
+    glColor3f(0.0, 1.0, 0.0)
+    draw_lines(120, 260, 120, 340)
+    draw_lines(120, 260, 200, 260)
+    draw_lines(200, 260, 200, 340)
+    draw_lines(120, 340, 200, 340)
+
+    draw_lines(300, 260, 380, 260)
+    draw_lines(300, 260, 300, 340)
+    draw_lines(380, 260, 380, 340)
+    draw_lines(300, 340, 380, 340)
+
+    glColor3f(231, 84, 128)
+    draw_points(280, 125)
+
+    draw_triangles()
+
+    glutSwapBuffers()
+
+
+
+
+glutInit()
+glutInitDisplayMode(GLUT_RGBA)
+glutInitWindowSize(500, 700) #window size
+glutInitWindowPosition(0, 0)
+wind = glutCreateWindow(b"OpenGL Coding Practice") #window name
+glutDisplayFunc(showScreen)
+
+glutMainLoop()

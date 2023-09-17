@@ -1,0 +1,71 @@
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
+
+
+def draw_points(x, y):
+    glPointSize(2.0)
+    glColor3f(0.5, 0.1, 1)
+    glBegin(GL_POINTS)
+    glVertex2f(x, y)
+    glEnd()
+
+
+def midpoint_circle_drawing(radius, centerp1, centerp2):
+    x = 0
+    y = radius
+    d = 1 - radius
+    while x <= y:
+        if d < 0:
+            d = d + (2 * x) + 3 # # east part
+            x += 1
+        else:
+            d = d + 2 * (x - y) + 5  ## south-east part
+            x += 1
+            y -= 1
+
+        ## draw for points
+
+        draw_points(centerp1 + x, centerp2 + y)
+        draw_points(centerp1 + y, centerp2 + x)
+        draw_points(centerp1 + y, centerp2 - x)
+        draw_points(centerp1 + x, centerp2 - y)
+        draw_points(centerp1 - x, centerp2 - y)
+        draw_points(centerp1 - y, centerp2 - x)
+        draw_points(centerp1 - y, centerp2 + x)
+        draw_points(centerp1 - x, centerp2 + y)
+
+
+def iterate():
+    glViewport(0, 0, 1000, 1000)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glOrtho(0.0, 1000, 0.0, 1000, 0.0, 1.0)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+
+
+def show_screen():
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    iterate()
+    glColor3f(0.0 ,0.0 ,0.0)  # yellow color set (RGB)
+    midpoint_circle_drawing(100, 500, 400)
+    midpoint_circle_drawing(100, 400, 500)
+    midpoint_circle_drawing(100, 300, 400)
+    midpoint_circle_drawing(100, 400, 300)
+    midpoint_circle_drawing(100, 470.7, 470.7)
+    midpoint_circle_drawing(100, 329.3, 329.3)
+    midpoint_circle_drawing(100, 470.7, 329.3)
+    midpoint_circle_drawing(100, 329.3, 470.7)
+    midpoint_circle_drawing(200, 400, 400)
+    glutSwapBuffers()
+
+
+glutInit()
+glutInitDisplayMode(GLUT_RGBA)
+glutInitWindowSize(800, 800)
+glutInitWindowPosition(0, 0)
+wind = glutCreateWindow(b"20301332 Lab Task 03")
+glutDisplayFunc(show_screen)
+glutMainLoop()
